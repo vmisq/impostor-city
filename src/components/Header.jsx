@@ -1,26 +1,24 @@
-import { onMount } from 'solid-js';
+import { createSignal, onMount } from "solid-js";
 
 export default function Header() {
+    const [theme, setTheme] = createSignal("light");
+
     onMount(() => {
         const saved = localStorage.getItem("theme");
         if (saved) {
-            document.documentElement.setAttribute("data-theme", saved);
-        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            localStorage.setItem("theme", "dark");
-            document.documentElement.setAttribute("data-theme", "dark");
-        } else {
-            localStorage.setItem("theme", "light");
-            document.documentElement.setAttribute("data-theme", "light");
-        };
+            setTheme(saved);
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            setTheme("dark");
+        }
+        document.documentElement.setAttribute("data-theme", theme());
     });
+
     const toggleTheme = () => {
-        const html = document.documentElement;
-        const current = html.getAttribute("data-theme") || "light";
-        const next = current === "light" ? "dark" : "light";
-        html.setAttribute("data-theme", next);
+        const next = theme() === "light" ? "dark" : "light";
+        setTheme(next);
+        document.documentElement.setAttribute("data-theme", next);
         localStorage.setItem("theme", next);
     };
-
     return (
         <div class="navbar bg-base-100 shadow-sm text-base-content">
             <div class="navbar-start gap-4">
@@ -31,7 +29,7 @@ export default function Header() {
             </div>
             <div class="navbar-end">
                 <label class="swap swap-rotate">
-                    <input onChange={toggleTheme} type="checkbox" checked={document.documentElement.getAttribute("data-theme") === "light"} />
+                    <input onInput={toggleTheme} type="checkbox" checked={theme()=="dark"} />
                     <svg
                         class="swap-off h-10 w-10 fill-current"
                         xmlns="http://www.w3.org/2000/svg"
