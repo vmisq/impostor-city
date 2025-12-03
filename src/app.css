@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/* Plugins must come after the main import */
+@plugin "@tailwindcss/typography";
+@plugin "daisyui" {
+  themes: light, dark;
+}
+
+/* Your custom variables */
+:root {
+  --background-rgb: 214, 219, 220;
+  --foreground-rgb: 0, 0, 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-rgb: 0, 0, 0;
+    --foreground-rgb: 255, 255, 255;
+  }
+}
+
+html[data-theme="light"] {
+  --background-rgb: 214, 219, 220;
+  --foreground-rgb: 0, 0, 0;
+}
+
+html[data-theme="dark"] {
+  --background-rgb: 0, 0, 0;
+  --foreground-rgb: 255, 255, 255;
+}
+
+body {
+  background: rgb(var(--background-rgb));
+  color: rgb(var(--foreground-rgb));
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+}
