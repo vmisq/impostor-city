@@ -3,6 +3,7 @@ import solidPlugin from "vite-plugin-solid";
 
 export default defineConfig({
   plugins: [solidPlugin()],
+  base: "/impostor-city/",
   build: {
     target: "esnext"
   },

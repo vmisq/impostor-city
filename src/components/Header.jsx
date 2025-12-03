@@ -1,9 +1,17 @@
-import { createSignal, createEffect, onMount } from 'solid-js';
+import { onMount } from 'solid-js';
 
 export default function Header() {
     onMount(() => {
         const saved = localStorage.getItem("theme");
-        if (saved) document.documentElement.setAttribute("data-theme", saved);
+        if (saved) {
+            document.documentElement.setAttribute("data-theme", saved);
+        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            localStorage.setItem("theme", "dark");
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            localStorage.setItem("theme", "light");
+            document.documentElement.setAttribute("data-theme", "light");
+        };
     });
     const toggleTheme = () => {
         const html = document.documentElement;

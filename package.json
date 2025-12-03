@@ -5,6 +5,8 @@
   "main": "index.html",
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist -b gh-page -f",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.22",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.17",
     "vite": "^7.2.6",
